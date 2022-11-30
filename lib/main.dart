@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controllers/user_controller.dart';
+import 'firebase_options.dart';
 import 'helpers/helper.dart';
 import 'helpers/shared_pref_utils.dart';
 import 'models/blog_category.dart';
@@ -30,21 +31,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GetStorage.init();
   //REMOVED FOR WEB BUILD
   // MobileAds.instance.initialize();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-    apiKey: "AIzaSyCQw148jvkCeortzo5oiWM8RSiWPWlbAJY",
-    appId: "1:399479013826:web:aa83319a61649efabb165b",
-    messagingSenderId: "399479013826",
-    projectId: "incite-90ab3",
-  ),
-  );
 
   try {
     GetIt.instance.registerSingleton<SharedPreferencesUtils>(
